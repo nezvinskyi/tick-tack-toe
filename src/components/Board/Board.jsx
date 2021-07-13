@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Square from '../Square';
+// import calculateWinner from '../../helpers/calculateWinner';
 
 class Board extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: true,
-    };
-  }
-
-  handleClick(i) {
-    const squares = [...this.state.squares];
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      squares: squares,
-      xIsNext: !this.state.xIsNext,
-    });
-  }
   // eslint-disable-next-line class-methods-use-this
   renderSquare(i) {
-    return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
+    return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
   }
 
   render() {
-    const status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
     return (
       <div>
         <div className="status">{status}</div>
@@ -48,4 +33,8 @@ class Board extends Component {
   }
 }
 
+Board.propTypes = {
+  squares: PropTypes.array,
+  onClick: PropTypes.func,
+};
 export default Board;
